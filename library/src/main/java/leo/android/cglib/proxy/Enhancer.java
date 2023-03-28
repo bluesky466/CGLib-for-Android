@@ -124,6 +124,9 @@ public class Enhancer {
             if (methodName.contains("$")) {  // Android studio will generate access$super method for every class
                 continue;
             }
+            if((method.getModifiers() & Modifier.FINAL) != 0) { // ignore final method
+                continue;
+            }
             retClass = method.getReturnType();
             isVoid = retClass.getSimpleName().equals("void");
             methodReturnType = TypeId.get(retClass);
