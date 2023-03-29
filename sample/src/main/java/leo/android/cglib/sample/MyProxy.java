@@ -15,10 +15,10 @@ public class MyProxy implements MethodInterceptor {
 	}
 	
 	public Object getProxy(Class cls) {
-		Enhancer e = new Enhancer(context);
+		Enhancer e = new Enhancer();
         e.setSuperclass(cls);
         e.setInterceptor(this);
-        return e.create();
+        return e.create(context.getDir("dexfiles", Context.MODE_PRIVATE).getAbsolutePath());
     }
 
 	@Override
