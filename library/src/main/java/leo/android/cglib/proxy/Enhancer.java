@@ -1,10 +1,5 @@
 package leo.android.cglib.proxy;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
 import com.android.dx.Code;
 import com.android.dx.Comparison;
 import com.android.dx.DexMaker;
@@ -14,17 +9,15 @@ import com.android.dx.Local;
 import com.android.dx.MethodId;
 import com.android.dx.TypeId;
 
-import android.content.Context;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class Enhancer {
 
-    private Context context;
     private Class<?> superclass;
     private MethodInterceptor interceptor;
-
-    public Enhancer(Context context) {
-        this.context = context;
-    }
 
     public void setSuperclass(Class<?> cls) {
         this.superclass = cls;
@@ -34,7 +27,7 @@ public class Enhancer {
         this.interceptor = interceptor;
     }
 
-    public Object create() {
+    public Object create(String cacheDir) {
         String superClsName = superclass.getName().replace(".", "/");
         String subClsName = superClsName + Const.SUBCLASS_SUFFIX;
 
@@ -42,7 +35,6 @@ public class Enhancer {
         TypeId<?> subType = TypeId.get("L" + subClsName + ";");
         TypeId<?> interfaceTypeId = TypeId.get(EnhancerInterface.class);
 
-        String cacheDir = context.getDir("dexfiles", Context.MODE_PRIVATE).getAbsolutePath();
 //		System.out.println("[Enhancer::create()] Create class extends from \"" + superclass.getName() + "\" stored in " + cacheDir);
 
         DexMaker dexMaker = new DexMaker();
@@ -124,7 +116,10 @@ public class Enhancer {
             if (methodName.contains("$")) {  // Android studio will generate access$super method for every class
                 continue;
             }
-            if((method.getModifiers() & Modifier.FINAL) != 0) { // ignore final method
+            if ((method.getModifiers() & Modifier.FINAL) != 0) { // ignore final method
+                continue;
+            }
+            if ((method.getModifiers() & Modifier.STATIC) != 0) { // ignore static method
                 continue;
             }
             retClass = method.getReturnType();
