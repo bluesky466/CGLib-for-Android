@@ -6,7 +6,16 @@ The usage of CGLib-for-Android is similar with CGLib, but CGLib only supports ja
 
 <br>
 1 Download cglib-for-android.jar to your project
-* [library/lib-output/cglib-for-android.jar](https://github.com/leo-ouyang/CGLib-for-Android/blob/master/library/lib-output/cglib-for-android.jar) (Right-click and Save as)
+* [cglib-for-android.aar](https://github.com/bluesky466/CGLib-for-Android/blob/master/output/cglib-for-android.aar) (Right-click and Save as)
+
+<br>
+
+implementation cglib-for-android and dexmaker:
+
+```groovy
+implementation files("libs/cglib-for-android.aar")
+implementation 'com.linkedin.dexmaker:dexmaker:2.28.3'
+```
 
 <br>
 2 Define the bussiness class which will be proxied in future
