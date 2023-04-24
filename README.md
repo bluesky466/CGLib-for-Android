@@ -1,4 +1,7 @@
 # CGLib-for-Android
+
+fork from https://github.com/leo-ouyang/CGLib-for-Android and fix some bugs
+
 CGLib-for-Android (Dex code Generation Library for Android) is high level API to dynamicall generate sub class, its implementation based on DexMaker. This library use for AOP, method intercept, data access authorization authentication on Android.
 <br>
 ## Usage
@@ -9,8 +12,7 @@ The usage of CGLib-for-Android is similar with CGLib, but CGLib only supports ja
 * [cglib-for-android.aar](https://github.com/bluesky466/CGLib-for-Android/blob/master/output/cglib-for-android.aar) (Right-click and Save as)
 
 <br>
-
-implementation cglib-for-android and dexmaker:
+2 implementation cglib-for-android and dexmaker:
 
 ```groovy
 implementation files("libs/cglib-for-android.aar")
@@ -18,7 +20,7 @@ implementation 'com.linkedin.dexmaker:dexmaker:2.28.3'
 ```
 
 <br>
-2 Define the bussiness class which will be proxied in future
+3 Define the bussiness class which will be proxied in future
 ```Java
 public class Printer {
     
@@ -30,7 +32,7 @@ public class Printer {
 ```
 
 <br>
-3 Define proxy class, need to implement MethodInterceptor
+4 Define proxy class, need to implement MethodInterceptor
 ```Java
 public class MyProxy implements MethodInterceptor {
     
@@ -59,7 +61,7 @@ public class MyProxy implements MethodInterceptor {
 ```
 
 <br>
-4 Get printer and run
+5 Get printer and run
 ```Java
 Printer printer = (Printer) new MyProxy(this).getProxy(Printer.class);
 printer.print();
